@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CreateTareaDto } from './dto/create-tarea.dto';
 import { UpdateTareaDto } from './dto/update-tarea.dto';
 import { Tarea } from './entities/tarea.entity';
@@ -12,8 +16,9 @@ import { UpdateEstadoDto } from './dto/update.estado.dto';
 @Injectable()
 export class TareasService {
   constructor(
-    @InjectRepository(Tarea) private readonly tareaRepository: Repository<Tarea>,
-    private readonly tareasGateway: TareasGateway
+    @InjectRepository(Tarea)
+    private readonly tareaRepository: Repository<Tarea>,
+    private readonly tareasGateway: TareasGateway,
   ) { }
 
   async create(createTareaDto: CreateTareaDto, user: UserActiveInterface) {
@@ -31,15 +36,15 @@ export class TareasService {
     }
     const tareas = await this.tareaRepository.find({
       where: {
-        userEmail: user.email
-      }
+        userEmail: user.email,
+      },
     });
     this.tareasGateway.emitirTareasObtenidas(tareas, user);
     return tareas;
   }
 
   async findOne(id: number, user: UserActiveInterface) {
-    const tarea = await this.tareaRepository.findOneBy({ id })
+    const tarea = await this.tareaRepository.findOneBy({ id });
     if (!tarea) {
       throw new BadRequestException(`Tarea con id ${id} no existe`);
     }
@@ -47,22 +52,30 @@ export class TareasService {
     return tarea;
   }
 
-  async update(id: number, updateTareaDto: UpdateTareaDto, user: UserActiveInterface) {
+  async update(
+    id: number,
+    updateTareaDto: UpdateTareaDto,
+    user: UserActiveInterface,
+  ) {
     await this.findOne(id, user);
 
     const tareaActualizada = await this.tareaRepository.update(id, {
       ...updateTareaDto,
-      userEmail: user.email
+      userEmail: user.email,
     });
     this.tareasGateway.emitirTareaActualizada(updateTareaDto, user);
     return tareaActualizada;
   }
-  async updateEstatus(id: number, updateEstadoDto: UpdateEstadoDto, user: UserActiveInterface) {
+  async updateEstatus(
+    id: number,
+    updateEstadoDto: UpdateEstadoDto,
+    user: UserActiveInterface,
+  ) {
     await this.findOne(id, user);
 
     const tareaActualizada = await this.tareaRepository.update(id, {
       ...updateEstadoDto,
-      userEmail: user.email
+      userEmail: user.email,
     });
     this.tareasGateway.emitirTareaTerminada(updateEstadoDto, user);
     return tareaActualizada;
@@ -76,7 +89,7 @@ export class TareasService {
 
   private validarPropietario(tarea: Tarea, user: UserActiveInterface) {
     if (user.role !== Role.ADMIN && tarea.userEmail !== user.email) {
-      throw new UnauthorizedException('No está permitido ver a esta tarea')
+      throw new UnauthorizedException('No está permitido ver a esta tarea');
     }
   }
 }

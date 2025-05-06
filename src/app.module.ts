@@ -1,32 +1,34 @@
 import { Module } from '@nestjs/common';
 import { TareasModule } from './tareas/tareas.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { AuthModule } from './auth/auth.module';
+import { envVars } from '@/config/env';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        type: 'postgres',
-        host: config.get('POSTGRES_HOST'),
-        port: parseInt(config.get('POSTGRES_PORT') || '5432'),
-        username: config.get('POSTGRES_USERNAME'),
-        password: config.get('POSTGRES_PASSWORD'),
-        database: config.get('POSTGRES_DATABASE'),
-        synchronize: true,
-        autoLoadEntities: true,
-        ssl: config.get('POSTGRES_SSL') === 'true',
-        extra: config.get('POSTGRES_SSL') === 'true'
+
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: envVars.POSTGRES_HOST,
+      port: envVars.POSTGRES_PORT,
+      username: envVars.POSTGRES_USERNAME,
+      password: envVars.POSTGRES_PASSWORD,
+      database: envVars.POSTGRES_DATABASE,
+      synchronize: true,
+      autoLoadEntities: true,
+      ssl: envVars.POSTGRES_SSL === true,
+      extra:
+        envVars.POSTGRES_SSL === true
           ? { ssl: { rejectUnauthorized: false } }
           : undefined,
-      }),
     }),
     TareasModule,
     UsuariosModule,
@@ -34,4 +36,3 @@ import { AuthModule } from './auth/auth.module';
   ],
 })
 export class AppModule { }
-

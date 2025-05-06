@@ -1,11 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { Role } from 'src/common/enums/rol.enum';
-import { ApiBearerAuth, ApiCreatedResponse, ApiForbiddenResponse, ApiOkResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiOkResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 
-const MENSAJE_PROTECCION = 'Prohibido para usuario de tipo USER, solo para ADMIN.'
+const MENSAJE_PROTECCION =
+  'Prohibido para usuario de tipo USER, solo para ADMIN.';
 
 @ApiBearerAuth()
 @ApiUnauthorizedResponse({
@@ -15,9 +23,7 @@ const MENSAJE_PROTECCION = 'Prohibido para usuario de tipo USER, solo para ADMIN
 @Auth(Role.ADMIN)
 @Controller('usuarios')
 export class UsuariosController {
-  constructor(private readonly usuariosService: UsuariosService) {
-
-  }
+  constructor(private readonly usuariosService: UsuariosService) {}
 
   @Post()
   @ApiCreatedResponse({

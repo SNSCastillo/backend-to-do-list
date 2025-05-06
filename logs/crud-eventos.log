@@ -1,1 +1,9 @@
 [2025-05-06T14:32:54.211Z] [LOG] Tareas obtenidas por: correo@ejemplo.com. Total: 0
+[2025-05-06T23:24:25.422Z] [LOG] Nueva tarea creada por: correo@ejemplo.com. ID: 1
+[2025-05-06T23:24:52.990Z] [LOG] Tareas obtenidas por: correo@ejemplo.com. Total: 1
+[2025-05-06T23:42:08.990Z] [LOG] [sss] Tareas obtenidas por: correo@ejemplo.com. Total: 1
+[2025-05-06T23:44:19.627Z] [LOG] [Se registró correctamente en crud-eventos.log] Tareas obtenidas por: correo@ejemplo.com. Total: 1
+[2025-05-06T23:45:43.584Z] [LOG] [Se registró correctamente en crud-eventos.log] Nueva tarea creada por: correo@ejemplo.com. ID: 2
+[2025-05-06T23:46:34.690Z] [LOG] [Se registró correctamente en crud-eventos.log] Tareas obtenidas por: correo@ejemplo.com. Total: 2
+[2025-05-06T23:46:45.722Z] [LOG] [Se registró correctamente en crud-eventos.log] Nueva tarea creada por: correo@ejemplo.com. ID: 3
+[2025-05-06T23:47:14.805Z] [LOG] [Se registró correctamente en crud-eventos.log] Tarea con ID 1 eliminada por: correo@ejemplo.com
