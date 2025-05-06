@@ -1,0 +1,14 @@
+version: "4.0"
+services:
+  postgres:
+    image: postgres:latest
+    container_name: db_prueba
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DATABASE}
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - "5439:5432"
