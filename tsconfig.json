@@ -1,5 +1,14 @@
 {
   "compilerOptions": {
+    /* Comprobaciones de tipo estrictas */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": false,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false,
+    "strictBindCallApply": true,
+    "noFallthroughCasesInSwitch": true,
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
@@ -12,10 +21,19 @@
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": true,
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@/core": [
+        "src/core"
+      ],
+      "@/interfaces/*": [
+        "src/core/interfaces/*"
+      ],
+      "@/config/*": [
+        "src/core/config/*"
+      ],
+    },
   }
 }

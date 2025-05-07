@@ -1,20 +1,26 @@
 import { Type } from 'class-transformer';
-import { IsString, IsNotEmpty, IsDateString, IsBoolean, IsInt, IsDate, IsOptional } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsBoolean,
+  IsDate,
+  IsOptional,
+} from 'class-validator';
 
 export class CreateTareaDto {
-    @IsString()
-    @IsNotEmpty()
-    nombre: string;
+  @IsString()
+  @IsNotEmpty()
+  nombre: string;
 
-    @IsString()
-    @IsNotEmpty()
-    descripcion: string;
+  @IsString()
+  @IsNotEmpty()
+  descripcion: string;
 
-    @IsDate()
-    @Type(() => Date)
-    fechaLimite: Date;
+  @IsDate()
+  @Type(() => Date)
+  fechaLimite: Date;
 
-    @IsBoolean()
-    @IsOptional()
-    estado?: boolean;
+  @IsBoolean()
+  @IsOptional()
+  estado?: boolean;
 }
