@@ -23,7 +23,7 @@ const MENSAJE_PROTECCION =
 @Auth(Role.ADMIN)
 @Controller('usuarios')
 export class UsuariosController {
-  constructor(private readonly usuariosService: UsuariosService) {}
+  constructor(private readonly usuariosService: UsuariosService) { }
 
   @Post()
   @ApiCreatedResponse({

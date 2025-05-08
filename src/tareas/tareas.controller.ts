@@ -31,7 +31,7 @@ import { UpdateEstadoDto } from './dto/update.estado.dto';
 @Auth(Role.USER)
 @Controller('tareas')
 export class TareasController {
-  constructor(private readonly tareasService: TareasService) {}
+  constructor(private readonly tareasService: TareasService) { }
 
   @Post()
   @ApiCreatedResponse({

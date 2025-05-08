@@ -32,7 +32,7 @@ export class AuthService {
   async login({ email, password }: LoginDto) {
     const usuario = await this.usuariosService.findByEmailWithPassword(email!);
     if (!usuario) {
-      throw new Error('El usuario no existe');
+      return { success: false, message: "El usuario no existe." };
     }
     const passwordOk = await bcryptjs.compare(password!, usuario.password!);
 
