@@ -11,4 +11,4 @@ import { TareasGateway } from './tareas.gateway';
   controllers: [TareasController],
   providers: [TareasService, TareasGateway],
 })
-export class TareasModule {}
+export class TareasModule { }

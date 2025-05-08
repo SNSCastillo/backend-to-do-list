@@ -4,7 +4,6 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-
 const logger = new Logger("Variables entorno");
 
 const parseBoolean = (value: unknown): boolean => {
@@ -16,7 +15,7 @@ const parseBoolean = (value: unknown): boolean => {
 const envSchema = z.object({
   TYPE: z.string(),
   HOST: z.string(),
-  PORT: z.coerce.number().positive(),
+  DB_PORT: z.coerce.number().positive(),
   NAMEUSER: z.string(),
   PASSWORD: z.string(),
   DATABASE: z.string(),
@@ -46,8 +45,6 @@ logger.log("✅ Variable de entorno cargados correctamente.");
 
 // Variables to use the environment variables in a type-safe way
 export const envVars = parseEnv.data;
-console.log(typeof envVars.CORREO);
-
 
 // Type to have the environment variables in a type-safe way
 export type Env = z.infer<typeof envSchema>;

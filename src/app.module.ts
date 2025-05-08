@@ -18,17 +18,13 @@ dotenv.config();
     TypeOrmModule.forRoot({
       type: envVars.TYPE as 'mysql' | 'mariadb' | 'postgres' | 'mongodb',
       host: envVars.HOST,
-      port: envVars.PORT,
+      port: envVars.DB_PORT,
       username: envVars.NAMEUSER,
       password: envVars.PASSWORD,
       database: envVars.DATABASE,
       synchronize: true,
       autoLoadEntities: true,
-      ssl: envVars.SSL === true,
-      extra:
-        envVars.SSL === true
-          ? { ssl: { rejectUnauthorized: false } }
-          : undefined,
+      ssl: envVars.SSL
     }),
     TareasModule,
     UsuariosModule,
