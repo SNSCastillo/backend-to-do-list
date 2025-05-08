@@ -18,6 +18,6 @@ export function setupSwagger(app: INestApplication): void {
     });
 
     logger.log(
-        `📚 Swagger available at ${URL}/${envVars!.SWAGGER_URL}`,
+        `Swagger available at: ${envVars.SWAGGER_URL}`,
     );
 }

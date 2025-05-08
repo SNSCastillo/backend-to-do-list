@@ -20,7 +20,7 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: ['http://localhost:3000'],
+    origin: [envVars.URL_FRONTEND],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // Cookies o auth con sesiones
   });
@@ -31,7 +31,7 @@ async function bootstrap() {
     setupSwagger(app);
   }
 
-  await app.listen(process.env.PORT ?? 4000);
+  await app.listen(envVars.PORT_NEST ?? 4000);
   logger.log(`Documentación con Swagger: ${await app.getUrl()}/${envVars.SWAGGER_URL}`);
 }
 bootstrap();

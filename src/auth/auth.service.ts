@@ -14,7 +14,7 @@ export class AuthService {
   async registro({ password, email, name }: RegisterDto) {
     const ususario = await this.usuariosService.findOneByEmail(email!);
     if (ususario) {
-      throw new Error('El usuario ya existe.');
+      return { success: false, message: "El usuario ya existe." };
     }
 
     await this.usuariosService.create({
@@ -24,6 +24,7 @@ export class AuthService {
     });
 
     return {
+      success: true,
       message: 'Usuario creado correctamente',
     };
   }
