@@ -1,15 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
-import { envVars } from './core/config/env';
-
 
 async function bootstrap() {
   const logger = new Logger('Main');
 
   const app = await NestFactory.create(AppModule);
 
-  app.setGlobalPrefix('prueba/v1');
+  app.setGlobalPrefix('/v1');
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -31,7 +29,7 @@ async function bootstrap() {
     setupSwagger(app);
   }
 
-  await app.listen(envVars.PORT_NEST ?? 4000);
+  await app.listen(process.env.PORT ?? 4000);
   logger.log(`Documentación con Swagger: ${await app.getUrl()}/${envVars.SWAGGER_URL}`);
 }
 bootstrap();
