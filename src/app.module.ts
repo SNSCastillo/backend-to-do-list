@@ -24,11 +24,7 @@ dotenv.config();
       database: envVars.DATABASE,
       synchronize: true,
       autoLoadEntities: true,
-      ssl: envVars.SSL === true,
-      extra:
-        envVars.SSL === true
-          ? { ssl: { rejectUnauthorized: false } }
-          : undefined,
+      ssl: envVars.SSL
     }),
     TareasModule,
     UsuariosModule,
