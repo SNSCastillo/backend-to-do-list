@@ -16,17 +16,17 @@ dotenv.config();
     }),
 
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: envVars.POSTGRES_HOST,
-      port: envVars.POSTGRES_PORT,
-      username: envVars.POSTGRES_USERNAME,
-      password: envVars.POSTGRES_PASSWORD,
-      database: envVars.POSTGRES_DATABASE,
+      type: envVars.TYPE as 'mysql' | 'mariadb' | 'postgres' | 'mongodb',
+      host: envVars.HOST,
+      port: envVars.PORT,
+      username: envVars.NAMEUSER,
+      password: envVars.PASSWORD,
+      database: envVars.DATABASE,
       synchronize: true,
       autoLoadEntities: true,
-      ssl: envVars.POSTGRES_SSL === true,
+      ssl: envVars.SSL === true,
       extra:
-        envVars.POSTGRES_SSL === true
+        envVars.SSL === true
           ? { ssl: { rejectUnauthorized: false } }
           : undefined,
     }),

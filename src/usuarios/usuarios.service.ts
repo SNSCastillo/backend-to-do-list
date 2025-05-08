@@ -10,8 +10,8 @@ export class UsuariosService {
     @InjectRepository(Usuario)
     private readonly usuarioRepository: Repository<Usuario>,
   ) { }
-  create(createUsuarioDto: CreateUsuarioDto) {
-    return this.usuarioRepository.save(createUsuarioDto);
+  async create(createUsuarioDto: CreateUsuarioDto) {
+    return await this.usuarioRepository.save(createUsuarioDto);
   }
 
   findOneByEmail(email: string) {

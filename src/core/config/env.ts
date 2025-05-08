@@ -14,18 +14,21 @@ const parseBoolean = (value: unknown): boolean => {
 };
 
 const envSchema = z.object({
-  POSTGRES_HOST: z.string(),
-  POSTGRES_PORT: z.coerce.number().positive(),
-  POSTGRES_USERNAME: z.string(),
-  POSTGRES_PASSWORD: z.string(),
-  POSTGRES_DATABASE: z.string(),
-  POSTGRES_SSL: z.preprocess(parseBoolean, z.boolean()),
+  TYPE: z.string(),
+  HOST: z.string(),
+  PORT: z.coerce.number().positive(),
+  NAMEUSER: z.string(),
+  PASSWORD: z.string(),
+  DATABASE: z.string(),
+  SSL: z.preprocess(parseBoolean, z.boolean()),
   JWT_SECRET: z.string().min(10),
+  URL_FRONTEND: z.string(),
   CORREO: z.string(),
   CORREO_PASSWORD: z.string(),
   ENABLE_SWAGGER: z.preprocess(parseBoolean, z.boolean()),
   SWAGGER_URL: z.string(),
   SWAGGER_JSON_URL: z.string(),
+  PORT_NEST: z.coerce.number().positive(),
 });
 
 
