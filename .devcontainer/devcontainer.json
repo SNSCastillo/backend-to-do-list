@@ -1,0 +1,14 @@
+{
+  "build": {
+    "dockerfile": "./../Dockerfile"
+  },
+  "forwardPorts": [3001], 
+  "mounts": [
+    "source=${localWorkspaceFolder}/.env,target=/workspace/.env,type=bind,consistency=cached"
+  ],
+  "customizations": {
+    "codespaces": {
+      "openFiles": ["src/main.ts"]
+    }
+  }
+}
