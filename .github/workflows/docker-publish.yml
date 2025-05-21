@@ -4,8 +4,8 @@ on:
   push:
     branches: [main]
     tags:
-      - 'v*'  # Publicará cuando hagas un tag como v1.0.0
-  workflow_dispatch:  # Permite ejecutarlo manualmente
+      - 'v*'  # Por ejemplo, v1.0.0
+  workflow_dispatch:  # Permite ejecutarlo manualmente desde GitHub
 
 jobs:
   build-and-push:
@@ -16,8 +16,14 @@ jobs:
       packages: write  # Necesario para publicar en ghcr.io
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set image name (lowercase)
+        run: |
+          OWNER_LOWERCASE=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          IMAGE_NAME="ghcr.io/$OWNER_LOWERCASE/to-do-list"
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
@@ -26,11 +32,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract image name from repository
-        id: meta
-        run: echo "IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/to-do-list" >> $GITHUB_ENV
-
-      - name: Build and push image
+      - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
