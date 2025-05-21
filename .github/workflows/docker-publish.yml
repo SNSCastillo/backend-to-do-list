@@ -1,0 +1,38 @@
+name: Publish Docker image to GHCR
+
+on:
+  push:
+    branches: [main]
+    tags:
+      - 'v*'  # Publicará cuando hagas un tag como v1.0.0
+  workflow_dispatch:  # Permite ejecutarlo manualmente
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write  # Necesario para publicar en ghcr.io
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract image name from repository
+        id: meta
+        run: echo "IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/to-do-list" >> $GITHUB_ENV
+
+      - name: Build and push image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ env.IMAGE_NAME }}:latest
