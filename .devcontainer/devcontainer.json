@@ -1,0 +1,16 @@
+{
+  "image": "ghcr.io/YOUR_USERNAME/to-do-list:latest",
+  "forwardPorts": [3001],
+  "mounts": [
+    "source=${localWorkspaceFolder}/.env,target=/workspace/.env,type=bind,consistency=cached"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": ["mtxr.sqltools"]
+    },
+    "codespaces": {
+      "openFiles": ["src/main.ts"]
+    }
+  }
+}
+
