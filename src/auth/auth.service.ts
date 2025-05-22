@@ -37,7 +37,7 @@ export class AuthService {
     const passwordOk = await bcryptjs.compare(password!, usuario.password!);
 
     if (!passwordOk) {
-      throw new UnauthorizedException('La contraseña es incorrecta');
+      return { success: false, message: "Contraseña incorrecta." };
     }
 
     const payload = {
@@ -49,7 +49,7 @@ export class AuthService {
 
     return {
       token: token,
-      email: usuario.email,
+      email: email,
     };
   }
 }
