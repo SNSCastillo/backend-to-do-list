@@ -21,7 +21,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [envVars.URL_FRONTEND],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true, // Cookies o auth con sesiones
+    credentials: false, // Cookies o auth con sesiones
   });
 
   // Enable Swagger if the environment variable is set to true
