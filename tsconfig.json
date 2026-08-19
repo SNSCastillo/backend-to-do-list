@@ -1,39 +1,29 @@
 {
-  "compilerOptions": {
-    /* Comprobaciones de tipo estrictas */
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": false,
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": false,
-    "strictBindCallApply": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "commonjs",
-    "declaration": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "ES2023",
-    "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true,
-    "skipLibCheck": true,
-    "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "@/core": [
-        "src/core"
-      ],
-      "@/interfaces/*": [
-        "src/core/interfaces/*"
-      ],
-      "@/config/*": [
-        "src/core/config/*"
-      ],
-    },
-  }
+	"compilerOptions": {
+		/* Comprobaciones de tipo estrictas */
+		"strict": true,
+		"noUncheckedIndexedAccess": true,
+		"strictNullChecks": true,
+		"strictPropertyInitialization": false,
+		"forceConsistentCasingInFileNames": true,
+		"noImplicitAny": false,
+		"strictBindCallApply": true,
+		"noFallthroughCasesInSwitch": true,
+		"module": "commonjs",
+		"declaration": true,
+		"removeComments": true,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"allowSyntheticDefaultImports": true,
+		"target": "ES2023",
+		"sourceMap": true,
+		"outDir": "./dist",
+		"incremental": true,
+		"skipLibCheck": true,
+		"paths": {
+			"@/core": ["./src/core"],
+			"@/interfaces/*": ["./src/core/interfaces/*"],
+			"@/config/*": ["./src/core/config/*"]
+		}
+	}
 }
