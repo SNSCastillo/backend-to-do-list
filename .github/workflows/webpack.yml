@@ -1,31 +1,70 @@
-name: To-do-list
+name: 🚀 Backend CI y publicación Docker
 
 on:
   push:
     branches: [ "main" ]
+    tags:
+      - 'v*'
   pull_request:
     branches: [ "main" ]
 
 jobs:
   build:
+    name: 🔨 Instalar dependencias y compilar backend
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: 📥 Descargar código del repositorio
+      uses: actions/checkout@v4
 
-    - name: Set up pnpm
+    - name: 📦 Configurar pnpm 9.11.0
       uses: pnpm/action-setup@v4
       with:
         version: 9.11.0
 
-    - name: Use Node.js 22
+    - name: ⚙️ Configurar Node.js 22 y caché de pnpm
       uses: actions/setup-node@v4
       with:
         node-version: 22
         cache: pnpm
 
-    - name: Install dependencies
+    - name: 📚 Instalar dependencias desde el lockfile
       run: pnpm install --frozen-lockfile
 
-    - name: Build
+    - name: ✅ Compilar aplicación NestJS
       run: pnpm build
+
+  build-and-push:
+    name: 🐳 Construir y publicar imagen Docker en GHCR
+    needs: build
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: 📥 Descargar código del repositorio
+        uses: actions/checkout@v4
+
+      - name: 🏷️ Preparar nombre de imagen en minúsculas
+        shell: bash
+        run: |
+          OWNER_LOWERCASE=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          IMAGE_NAME="ghcr.io/$OWNER_LOWERCASE/to-do-list"
+          echo "IMAGE_NAME=$IMAGE_NAME" >> "$GITHUB_ENV"
+
+      - name: 🔐 Iniciar sesión en GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 📤 Construir y publicar imagen Docker
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ env.IMAGE_NAME }}:latest
