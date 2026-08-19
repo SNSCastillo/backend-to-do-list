@@ -1,43 +1,41 @@
 import { Logger } from "@nestjs/common";
+import * as dotenv from "dotenv";
 import { z } from "zod";
-import * as dotenv from 'dotenv';
 
 dotenv.config();
 
 const logger = new Logger("Variables entorno");
 
 const parseBoolean = (value: unknown): boolean => {
-  if (typeof value !== "string") return false;
-  const normalizedValue = value.toLowerCase();
-  return normalizedValue === "true";
+	if (typeof value !== "string") return false;
+	const normalizedValue = value.toLowerCase();
+	return normalizedValue === "true";
 };
 
 const envSchema = z.object({
-  TYPE: z.string(),
-  HOST: z.string(),
-  DB_PORT: z.coerce.number().positive(),
-  NAMEUSER: z.string(),
-  PASSWORD: z.string(),
-  DATABASE: z.string(),
-  SSL: z.preprocess(parseBoolean, z.boolean()),
-  JWT_SECRET: z.string().min(10),
-  URL_FRONTEND: z.string(),
-  CORREO: z.string(),
-  CORREO_PASSWORD: z.string(),
-  ENABLE_SWAGGER: z.preprocess(parseBoolean, z.boolean()),
-  SWAGGER_URL: z.string(),
-  SWAGGER_JSON_URL: z.string(),
-  PORT_NEST: z.coerce.number().positive(),
+	TYPE: z.string(),
+	HOST: z.string(),
+	DB_PORT: z.coerce.number().positive(),
+	NAMEUSER: z.string(),
+	PASSWORD: z.string(),
+	DATABASE: z.string(),
+	SSL: z.preprocess(parseBoolean, z.boolean()),
+	JWT_SECRET: z.string().min(10),
+	URL_FRONTEND: z.string(),
+	CORREO: z.string(),
+	CORREO_PASSWORD: z.string(),
+	ENABLE_SWAGGER: z.preprocess(parseBoolean, z.boolean()),
+	SWAGGER_URL: z.string(),
+	SWAGGER_JSON_URL: z.string(),
+	PORT_NEST: z.coerce.number().positive(),
 });
-
 
 const parseEnv = envSchema.safeParse(process.env);
 
-
 if (!parseEnv.success) {
-  logger.error("❌ Invalid environment variables:");
-  logger.error(`⚠️ ${JSON.stringify(parseEnv.error.format())}`);
-  throw new Error("🚫 Invalid environment variables");
+	logger.error("❌ Invalid environment variables:");
+	logger.error(`⚠️ ${JSON.stringify(parseEnv.error.format())}`);
+	throw new Error("🚫 Invalid environment variables");
 }
 
 // Log de variables cargadas

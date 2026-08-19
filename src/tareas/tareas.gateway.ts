@@ -1,72 +1,87 @@
-import { Logger } from '@nestjs/common';
+import { Logger } from "@nestjs/common";
 import {
-  WebSocketGateway,
-  WebSocketServer,
-  OnGatewayInit,
-  OnGatewayConnection,
-  OnGatewayDisconnect,
-} from '@nestjs/websockets';
-import { Server, Socket } from 'socket.io';
-import { UserActiveInterface } from 'src/common/interfaces/user-active.interface';
-import { RegistroPersonalizado } from '../common/utils/logger.utils';
+	type OnGatewayConnection,
+	type OnGatewayDisconnect,
+	type OnGatewayInit,
+	WebSocketGateway,
+	WebSocketServer,
+} from "@nestjs/websockets";
+import type { Server, Socket } from "socket.io";
+import type { UserActiveInterface } from "../common/interfaces/user-active.interface";
+import { RegistroPersonalizado } from "../common/utils/logger.utils";
+import type { Tarea } from "./entities/tarea.entity";
 @WebSocketGateway({
-  cors: {
-    origin: '*',
-  },
+	cors: {
+		origin: "*",
+	},
 })
 export class TareasGateway
-  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
-  private readonly loggerGateway = new RegistroPersonalizado("Registro Personalizado");
-  private readonly logger = new Logger('Gateway Tareas');
-  private readonly success = "Se registró correctamente en crud-eventos.log";
+	implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
+{
+	private readonly loggerGateway = new RegistroPersonalizado(
+		"Registro Personalizado",
+	);
+	private readonly logger = new Logger("Gateway Tareas");
+	private readonly success = "Se registró correctamente en crud-eventos.log";
 
-  @WebSocketServer() server: Server;
+	@WebSocketServer() server: Server;
 
-  afterInit(server: Server) {
-    this.logger.log('Socket.io inicializado');
-  }
+	afterInit(_server: Server) {
+		this.logger.log("Socket.io inicializado");
+	}
 
-  handleConnection(client: Socket) {
-    this.logger.log(`Cliente conectado: ${client.id}`);
-  }
+	handleConnection(client: Socket) {
+		this.logger.log(`Cliente conectado: ${client.id}`);
+	}
 
-  handleDisconnect(client: Socket) {
-    this.logger.log(`Cliente desconectado: ${client.id}`);
-  }
+	handleDisconnect(client: Socket) {
+		this.logger.log(`Cliente desconectado: ${client.id}`);
+	}
 
-  emitirTareasObtenidas(tareas: any[], user: UserActiveInterface) {
-    this.server.emit('tareasObtenidas', tareas);
-    this.loggerGateway.log(
-      `Tareas obtenidas por: ${user.email}. Total: ${tareas.length}`, this.success
-    );
-    this.logger.log(
-      `Tareas obtenidas por: ${user.email}. Total: ${tareas.length}`,
-    );
-  }
+	emitirTareasObtenidas(tareas: Tarea[], user: UserActiveInterface) {
+		this.server.emit("tareasObtenidas", tareas);
+		this.loggerGateway.log(
+			`Tareas obtenidas por: ${user.email}. Total: ${tareas.length}`,
+			this.success,
+		);
+		this.logger.log(
+			`Tareas obtenidas por: ${user.email}. Total: ${tareas.length}`,
+		);
+	}
 
-  emitirNuevaTarea(tarea: any, user: UserActiveInterface) {
-    this.server.emit('tareaCreada', tarea);
-    this.loggerGateway.log(
-      `Nueva tarea creada por: ${user.email}. ID: ${tarea.id}`, this.success
-    );
-    this.logger.log(`Nueva tarea creada por: ${user.email}. ID: ${tarea.id}`);
-  }
+	emitirNuevaTarea(tarea: Tarea, user: UserActiveInterface) {
+		this.server.emit("tareaCreada", tarea);
+		this.loggerGateway.log(
+			`Nueva tarea creada por: ${user.email}. ID: ${tarea.id}`,
+			this.success,
+		);
+		this.logger.log(`Nueva tarea creada por: ${user.email}. ID: ${tarea.id}`);
+	}
 
-  emitirTareaActualizada(tarea, user: UserActiveInterface) {
-    this.server.emit('tareaActualizada', tarea);
-    this.loggerGateway.log(`Tarea ${tarea} actualizada por: ${user.email}.`, this.success);
-    this.logger.log(`Tarea ${tarea} actualizada por: ${user.email}.`);
-  }
+	emitirTareaActualizada(tarea, user: UserActiveInterface) {
+		this.server.emit("tareaActualizada", tarea);
+		this.loggerGateway.log(
+			`Tarea ${tarea} actualizada por: ${user.email}.`,
+			this.success,
+		);
+		this.logger.log(`Tarea ${tarea} actualizada por: ${user.email}.`);
+	}
 
-  emitirTareaTerminada(tarea, user: UserActiveInterface) {
-    this.server.emit('tareaTerminada', tarea);
-    this.loggerGateway.log(`Tarea ${tarea} terminada por: ${user.email}.`, this.success);
-    this.logger.log(`Tarea ${tarea} terminadaa por: ${user.email}.`);
-  }
+	emitirTareaTerminada(tarea, user: UserActiveInterface) {
+		this.server.emit("tareaTerminada", tarea);
+		this.loggerGateway.log(
+			`Tarea ${tarea} terminada por: ${user.email}.`,
+			this.success,
+		);
+		this.logger.log(`Tarea ${tarea} terminadaa por: ${user.email}.`);
+	}
 
-  emitirTareaEliminada(id: number, user: UserActiveInterface) {
-    this.server.emit('tareaEliminada', { id });
-    this.loggerGateway.log(`Tarea con ID ${id} eliminada por: ${user.email}`, this.success);
-    this.logger.log(`Tarea con ID: ${id} eliminada por: ${user.email}`);
-  }
+	emitirTareaEliminada(id: number, user: UserActiveInterface) {
+		this.server.emit("tareaEliminada", { id });
+		this.loggerGateway.log(
+			`Tarea con ID ${id} eliminada por: ${user.email}`,
+			this.success,
+		);
+		this.logger.log(`Tarea con ID: ${id} eliminada por: ${user.email}`);
+	}
 }
