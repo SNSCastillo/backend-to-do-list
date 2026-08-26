@@ -7,10 +7,10 @@ import {
 	ApiTags,
 	ApiUnauthorizedResponse,
 } from "@nestjs/swagger";
-import { Auth } from "../auth/decorators/auth.decorator";
-import { Role } from "../common/enums/rol.enum";
-import type { CreateUsuarioDto } from "./dto/create-usuario.dto";
-import type { UsuariosService } from "./usuarios.service";
+import { Auth } from "../../auth/decorators/auth.decorator";
+import { Role } from "../../common/enums/rol.enum";
+import { CreateUsuarioDto } from "./dto/create-usuario.dto";
+import { UsuariosService } from "./usuarios.service";
 
 const MENSAJE_PROTECCION =
 	"Prohibido para usuario de tipo USER, solo para ADMIN.";

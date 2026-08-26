@@ -38,11 +38,8 @@ if (!parseEnv.success) {
 	throw new Error("🚫 Invalid environment variables");
 }
 
-// Log de variables cargadas
-logger.log("✅ Variable de entorno cargados correctamente.");
+logger.log("✅ Variables de entorno cargados correctamente.");
 
-// Variables to use the environment variables in a type-safe way
 export const envVars = parseEnv.data;
 
-// Type to have the environment variables in a type-safe way
 export type Env = z.infer<typeof envSchema>;

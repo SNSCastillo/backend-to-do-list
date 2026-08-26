@@ -1,15 +1,16 @@
 import { Logger } from "@nestjs/common";
 import {
-	type OnGatewayConnection,
-	type OnGatewayDisconnect,
-	type OnGatewayInit,
+	OnGatewayConnection,
+	OnGatewayDisconnect,
+	OnGatewayInit,
 	WebSocketGateway,
 	WebSocketServer,
 } from "@nestjs/websockets";
-import type { Server, Socket } from "socket.io";
-import type { UserActiveInterface } from "../common/interfaces/user-active.interface";
-import { RegistroPersonalizado } from "../common/utils/logger.utils";
-import type { Tarea } from "./entities/tarea.entity";
+import { Server, Socket } from "socket.io";
+import { UserActiveInterface } from "../../common/interfaces/user-active.interface";
+import { RegistroPersonalizado } from "../../common/utils/logger.utils";
+import { Tarea } from "../../entities/tarea.entity";
+
 @WebSocketGateway({
 	cors: {
 		origin: "*",
@@ -76,7 +77,7 @@ export class TareasGateway
 		this.logger.log(`Tarea ${tarea} terminadaa por: ${user.email}.`);
 	}
 
-	emitirTareaEliminada(id: number, user: UserActiveInterface) {
+	emitirTareaEliminada(id: string, user: UserActiveInterface) {
 		this.server.emit("tareaEliminada", { id });
 		this.loggerGateway.log(
 			`Tarea con ID ${id} eliminada por: ${user.email}`,

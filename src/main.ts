@@ -21,10 +21,9 @@ async function bootstrap() {
 	app.enableCors({
 		origin: [envVars.URL_FRONTEND],
 		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-		credentials: false, // Cookies o auth con sesiones
+		credentials: false,
 	});
 
-	// Enable Swagger if the environment variable is set to true
 	if (envVars.ENABLE_SWAGGER === true) {
 		const { setupSwagger } = await import("./core/config/swagger");
 		setupSwagger(app);

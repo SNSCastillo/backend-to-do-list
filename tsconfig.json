@@ -1,6 +1,5 @@
 {
 	"compilerOptions": {
-		/* Comprobaciones de tipo estrictas */
 		"strict": true,
 		"noUncheckedIndexedAccess": true,
 		"strictNullChecks": true,
@@ -23,7 +22,9 @@
 		"paths": {
 			"@/core": ["./src/core"],
 			"@/interfaces/*": ["./src/core/interfaces/*"],
-			"@/config/*": ["./src/core/config/*"]
+			"@/config/*": ["./src/core/config/*"],
+			"@/modules/*": ["./src/modules/*"],
+			"@/entities/*": ["./src/entities/*"]
 		}
 	}
 }

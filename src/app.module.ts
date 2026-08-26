@@ -3,9 +3,9 @@ import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AuthModule } from "./auth/auth.module";
 import { envVars } from "./core/config/env";
+import { TaskModule } from "./modules/task/tareas.module";
+import { UsersModule } from "./modules/users/usuarios.module";
 import { SeedersModule } from "./seeders/seeders.module";
-import { TareasModule } from "./tareas/tareas.module";
-import { UsuariosModule } from "./usuarios/usuarios.module";
 
 @Module({
 	imports: [
@@ -24,8 +24,8 @@ import { UsuariosModule } from "./usuarios/usuarios.module";
 			autoLoadEntities: true,
 			ssl: envVars.SSL,
 		}),
-		TareasModule,
-		UsuariosModule,
+		TaskModule,
+		UsersModule,
 		AuthModule,
 		SeedersModule,
 	],

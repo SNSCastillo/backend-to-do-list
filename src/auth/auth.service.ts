@@ -1,23 +1,23 @@
 import { Injectable } from "@nestjs/common";
-import type { JwtService } from "@nestjs/jwt";
+import { JwtService } from "@nestjs/jwt";
 import * as bcryptjs from "bcryptjs";
-import type { UsuariosService } from "../usuarios/usuarios.service";
-import type { LoginDto } from "./dto/login.dto";
-import type { RegisterDto } from "./dto/register.dto";
+import { LoginDto } from "./dto/login.dto";
+import { RegisterDto } from "./dto/register.dto";
+import { UsuariosService } from "@/modules/users/usuarios.service";
 
 @Injectable()
 export class AuthService {
 	constructor(
-		private readonly usuariosService: UsuariosService,
+		private userService: UsuariosService,
 		private readonly jwtService: JwtService,
 	) {}
 	async registro({ password, email, name }: RegisterDto) {
-		const ususario = await this.usuariosService.findOneByEmail(email);
+		const ususario = await this.userService.findOneByEmail(email);
 		if (ususario) {
 			return { success: false, message: "El usuario ya existe." };
 		}
 
-		await this.usuariosService.create({
+		await this.userService.create({
 			name,
 			email,
 			password: await bcryptjs.hash(password, 10),
@@ -30,19 +30,19 @@ export class AuthService {
 	}
 
 	async login({ email, password }: LoginDto) {
-		const usuario = await this.usuariosService.findByEmailWithPassword(email);
-		if (!usuario) {
+		const user = await this.userService.findByEmailWithPassword(email);
+		if (!user) {
 			return { success: false, message: "El usuario no existe." };
 		}
-		const passwordOk = await bcryptjs.compare(password, usuario.password);
+		const passwordOk = await bcryptjs.compare(password, user.password);
 
 		if (!passwordOk) {
 			return { success: false, message: "Contraseña incorrecta." };
 		}
 
 		const payload = {
-			email: usuario.email,
-			role: usuario.role,
+			email: user.email,
+			role: user.role,
 		};
 
 		const token = await this.jwtService.signAsync(payload);
@@ -50,6 +50,7 @@ export class AuthService {
 		return {
 			token: token,
 			email: email,
+			name: user.name,
 		};
 	}
 }

@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { AuthModule } from "../auth/auth.module";
-import { Tarea } from "./entities/tarea.entity";
+import { AuthModule } from "../../auth/auth.module";
+import { Tarea } from "../../entities/tarea.entity";
 import { TareasController } from "./tareas.controller";
 import { TareasGateway } from "./tareas.gateway";
 import { TareasService } from "./tareas.service";
@@ -11,4 +11,4 @@ import { TareasService } from "./tareas.service";
 	controllers: [TareasController],
 	providers: [TareasService, TareasGateway],
 })
-export class TareasModule {}
+export class TaskModule {}
