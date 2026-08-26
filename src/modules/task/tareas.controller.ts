@@ -14,14 +14,14 @@ import {
 	ApiTags,
 	ApiUnauthorizedResponse,
 } from "@nestjs/swagger";
-import { Auth } from "../auth/decorators/auth.decorator";
-import { ActiveUser } from "../common/decorators/active-user.decorator";
-import { Role } from "../common/enums/rol.enum";
-import type { UserActiveInterface } from "../common/interfaces/user-active.interface";
-import type { CreateTareaDto } from "./dto/create-tarea.dto";
-import type { UpdateEstadoDto } from "./dto/update.estado.dto";
-import type { UpdateTareaDto } from "./dto/update-tarea.dto";
-import type { TareasService } from "./tareas.service";
+import { Auth } from "../../auth/decorators/auth.decorator";
+import { ActiveUser } from "../../common/decorators/active-user.decorator";
+import { Role } from "../../common/enums/rol.enum";
+import { UserActiveInterface } from "../../common/interfaces/user-active.interface";
+import { CreateTareaDto } from "./dto/create-tarea.dto";
+import { UpdateEstadoDto } from "./dto/update.estado.dto";
+import { UpdateTareaDto } from "./dto/update-tarea.dto";
+import { TareasService } from "./tareas.service";
 
 @ApiBearerAuth()
 @ApiUnauthorizedResponse({
@@ -57,7 +57,7 @@ export class TareasController {
 		description: "Una tarea obtenida.",
 	})
 	findOne(@Param("id") id: string, @ActiveUser() user: UserActiveInterface) {
-		return this.tareasService.findOne(+id, user);
+		return this.tareasService.findOne(id, user);
 	}
 
 	@Patch(":id")
@@ -67,7 +67,7 @@ export class TareasController {
 		@Body() updateTareaDto: UpdateTareaDto,
 		@ActiveUser() user: UserActiveInterface,
 	) {
-		return this.tareasService.update(+id, updateTareaDto, user);
+		return this.tareasService.update(id, updateTareaDto, user);
 	}
 	@Patch(":id/estado")
 	@ApiOkResponse({ description: "Tarea completada." })
@@ -76,12 +76,12 @@ export class TareasController {
 		@Body() updateEstadoDto: UpdateEstadoDto,
 		@ActiveUser() user: UserActiveInterface,
 	) {
-		return this.tareasService.updateEstatus(+id, updateEstadoDto, user);
+		return this.tareasService.updateEstatus(id, updateEstadoDto, user);
 	}
 
 	@Delete(":id")
 	@ApiOkResponse({ description: "Tarea eliminada correctamente." })
 	remove(@Param("id") id: string, @ActiveUser() user: UserActiveInterface) {
-		return this.tareasService.remove(+id, user);
+		return this.tareasService.remove(id, user);
 	}
 }

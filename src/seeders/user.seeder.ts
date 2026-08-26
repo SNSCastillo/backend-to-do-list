@@ -1,10 +1,10 @@
 import { Injectable, Logger, type OnModuleInit } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import * as bcrypt from "bcryptjs";
-import type { Repository } from "typeorm";
+import { Repository } from "typeorm";
+import { Usuario } from "@/entities/usuario.entity";
 import { Role } from "../common/enums/rol.enum";
 import { envVars } from "../core/config/env";
-import { Usuario } from "../usuarios/entities/usuario.entity";
 
 @Injectable()
 export class UserSeeder implements OnModuleInit {

@@ -5,22 +5,16 @@ import {
 	JoinColumn,
 	ManyToOne,
 } from "typeorm";
-import { Usuario } from "../../usuarios/entities/usuario.entity";
+import { Usuario } from "./usuario.entity";
+import { EntityBase } from "./common/base.entity";
 
 @Entity()
-export class Tarea {
-	@Column({ primary: true, generated: true })
-	id: number;
-
+export class Tarea extends EntityBase {
 	@Column()
 	nombre: string;
 
 	@Column()
 	descripcion: string;
-
-	// La fecha de creación se obtiene automáticamente
-	@CreateDateColumn({ type: "timestamptz" })
-	fechaCreacion: Date;
 
 	@Column({ type: "timestamptz" })
 	fechaLimite: Date;
